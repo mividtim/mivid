@@ -74,6 +74,9 @@ init = function(bootstrap, defaultRoute) {
   tags = {};
   router(function(route) {
     var token;
+    if (route.length < 1) {
+      route = this.defaultRoute;
+    }
     if (route.startsWith("access_token")) {
       token = route.split("id_token=")[1].split("&")[0];
       localStorage.setItem("authToken", token);

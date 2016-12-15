@@ -36,6 +36,7 @@ init = (bootstrap, defaultRoute) ->
   tags = {}
   # Dispatch a route action to the Redux store whenever the URI hash changes
   router (route) ->
+    if route.length < 1 then route = @defaultRoute
     if route.startsWith "access_token"
       token = route.split("id_token=")[1].split("&")[0]
       localStorage.setItem "authToken", token
