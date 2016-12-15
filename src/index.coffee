@@ -11,5 +11,5 @@ module.exports = init: ({auth0ClientId, auth0Domain, actionsAndReducers, bootstr
   sound.init sounds if sounds?
   mixin.init mixins
   riot.mount layoutTagName or "layout"
-  router.init bootstrap, defaultRoute or "home"
+  router.init bootstrap
   router.start()

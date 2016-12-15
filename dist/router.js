@@ -23,7 +23,7 @@ reducer = function(state, action) {
   }
   if (action.type === actionTypes.route) {
     if (action.route.length < 1) {
-      return this.defaultRoute;
+      return "home";
     } else {
       return action.route;
     }
@@ -44,9 +44,8 @@ triggerRoute = function(tag) {
   return results;
 };
 
-init = function(bootstrap, defaultRoute) {
+init = function(bootstrap) {
   var redux, tags;
-  this.defaultRoute = defaultRoute || "home";
   redux = require("./redux");
   riot.mixin({
     init: function() {
@@ -74,9 +73,6 @@ init = function(bootstrap, defaultRoute) {
   tags = {};
   router(function(route) {
     var token;
-    if (route.length < 1) {
-      route = this.defaultRoute;
-    }
     if (route.startsWith("access_token")) {
       token = route.split("id_token=")[1].split("&")[0];
       localStorage.setItem("authToken", token);

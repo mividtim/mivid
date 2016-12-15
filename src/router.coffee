@@ -11,7 +11,7 @@ actions =
 
 reducer = (state = "home", action) ->
   if action.type is actionTypes.route
-    if action.route.length < 1 then @defaultRoute else action.route
+    if action.route.length < 1 then "home" else action.route
   else state
 
 triggerRoute = (tag) ->
@@ -19,8 +19,7 @@ triggerRoute = (tag) ->
   triggerRoute tag.tags[key] for key of tag.tags
 
 # You have to pass the Redux store into the router on startup
-init = (bootstrap, defaultRoute) ->
-  @defaultRoute = defaultRoute or "home"
+init = (bootstrap) ->
   redux = require "./redux"
   riot.mixin init: ->
     route = ""
@@ -36,7 +35,6 @@ init = (bootstrap, defaultRoute) ->
   tags = {}
   # Dispatch a route action to the Redux store whenever the URI hash changes
   router (route) ->
-    if route.length < 1 then route = @defaultRoute
     if route.startsWith "access_token"
       token = route.split("id_token=")[1].split("&")[0]
       localStorage.setItem "authToken", token

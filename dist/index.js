@@ -23,7 +23,7 @@ module.exports = {
     }
     mixin.init(mixins);
     riot.mount(layoutTagName || "layout");
-    router.init(bootstrap, defaultRoute || "home");
+    router.init(bootstrap);
     return router.start();
   }
 };
