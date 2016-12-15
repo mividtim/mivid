@@ -19,7 +19,7 @@ actions = {
 
 reducer = function(state, action) {
   if (state == null) {
-    state = "";
+    state = "home";
   }
   if (action.type === actionTypes.route) {
     if (action.route.length < 1) {

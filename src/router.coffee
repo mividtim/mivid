@@ -9,7 +9,7 @@ actions =
     route
   }
 
-reducer = (state = "", action) ->
+reducer = (state = "home", action) ->
   if action.type is actionTypes.route
     if action.route.length < 1 then @defaultRoute else action.route
   else state
