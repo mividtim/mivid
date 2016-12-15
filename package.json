@@ -1,0 +1,38 @@
+{
+  "name": "mivid",
+  "author": "Mivid Studios <mivid-stack@mividstudios.com>",
+  "description": "A front-end stack of Auth0, Riot.js, Redux, and GraphQL",
+  "version": "0.0.1",
+  "license": "MIT",
+  "homepage": "https://github.com/mividtim/mivid",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mividtim/mivid.git"
+  },
+  "engines": {
+    "node": "6.9.2"
+  },
+  "scripts": {
+    "clean": "gulp clean",
+    "build": "gulp build",
+    "rebuild": "gulp rebuild"
+  },
+  "dependencies": {
+    "auth0": "^2.5.0",
+    "auth0-lock": "^10.7.2",
+    "bluebird": "^3.4.6",
+    "graphql": "^0.8.2",
+    "graphql-client": "^1.1.0",
+    "lodash.assign": "^4.2.0",
+    "lodash.reduce": "^4.6.0",
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.1.0",
+    "riot": "^3.0.4",
+    "riot-route": "^3.0.2"
+  },
+  "devDependencies": {
+    "del": "^2.2.2",
+    "gulp": "github:gulpjs/gulp#4.0",
+    "gulp-coffee": "^2.3.3"
+  }
+}
