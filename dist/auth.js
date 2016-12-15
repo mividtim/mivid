@@ -155,5 +155,3 @@ module.exports = {
   actions: actions,
   reducer: reducer
 };
-
-//# sourceMappingURL=auth.js.map

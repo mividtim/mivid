@@ -26,8 +26,5 @@ node_modules/
 # Brunch folder for temporary files.
 tmp/
 
-# Build output folders
-build/
-
 # Environment variables
 .env

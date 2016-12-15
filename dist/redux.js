@@ -29,5 +29,3 @@ module.exports = {
     return this.store = redux.createStore(this.reducer, void 0, middlewares);
   }
 };
-
-//# sourceMappingURL=redux.js.map

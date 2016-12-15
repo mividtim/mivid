@@ -20,6 +20,8 @@ triggerRoute = (tag) ->
 
 # You have to pass the Redux store into the router on startup
 init = (bootstrap) ->
+  if not bootstrap?
+    bootstrap = (store, actions) -> yes
   redux = require "./redux"
   riot.mixin init: ->
     route = ""

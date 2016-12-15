@@ -272,5 +272,3 @@ module.exports = {
     return results;
   }
 };
-
-//# sourceMappingURL=mixin.js.map

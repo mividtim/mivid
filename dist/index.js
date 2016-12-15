@@ -29,5 +29,3 @@ module.exports = {
     return router.start();
   }
 };
-
-//# sourceMappingURL=index.js.map

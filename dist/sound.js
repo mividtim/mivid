@@ -27,5 +27,3 @@ module.exports = {
     }
   }
 };
-
-//# sourceMappingURL=sound.js.map

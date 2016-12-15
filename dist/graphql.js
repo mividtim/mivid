@@ -10,5 +10,3 @@ module.exports = function(state) {
     }
   });
 };
-
-//# sourceMappingURL=graphql.js.map

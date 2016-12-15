@@ -46,6 +46,11 @@ triggerRoute = function(tag) {
 
 init = function(bootstrap) {
   var redux, tags;
+  if (bootstrap == null) {
+    bootstrap = function(store, actions) {
+      return true;
+    };
+  }
   redux = require("./redux");
   riot.mixin({
     init: function() {
@@ -110,5 +115,3 @@ module.exports = {
   init: init,
   start: start
 };
-
-//# sourceMappingURL=router.js.map

@@ -8,5 +8,3 @@ module.exports = function(modules, exportName) {
     return moduleExports;
   }), {});
 };
-
-//# sourceMappingURL=getModuleExports.js.map
