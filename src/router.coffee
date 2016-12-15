@@ -9,9 +9,9 @@ actions =
     route
   }
 
-reducer = (state = "home", action) ->
+reducer = (state = "", action) ->
   if action.type is actionTypes.route
-    if action.route.length < 1 then "home" else action.route
+    if action.route.length < 1 then @defaultRoute else action.route
   else state
 
 triggerRoute = (tag) ->
@@ -19,9 +19,8 @@ triggerRoute = (tag) ->
   triggerRoute tag.tags[key] for key of tag.tags
 
 # You have to pass the Redux store into the router on startup
-init = (bootstrap) ->
-  if not bootstrap?
-    bootstrap = (store, actions) -> yes
+init = (bootstrap, defaultRoute) ->
+  @defaultRoute = defaultRoute or "home"
   redux = require "./redux"
   riot.mixin init: ->
     route = ""

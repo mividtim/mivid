@@ -19,11 +19,11 @@ actions = {
 
 reducer = function(state, action) {
   if (state == null) {
-    state = "home";
+    state = "";
   }
   if (action.type === actionTypes.route) {
     if (action.route.length < 1) {
-      return "home";
+      return this.defaultRoute;
     } else {
       return action.route;
     }
@@ -44,13 +44,9 @@ triggerRoute = function(tag) {
   return results;
 };
 
-init = function(bootstrap) {
+init = function(bootstrap, defaultRoute) {
   var redux, tags;
-  if (bootstrap == null) {
-    bootstrap = function(store, actions) {
-      return true;
-    };
-  }
+  this.defaultRoute = defaultRoute || "home";
   redux = require("./redux");
   riot.mixin({
     init: function() {
