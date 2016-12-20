@@ -29,7 +29,7 @@ actions =
     redux = require "./redux"
     (dispatch) ->
       dispatch type: actionTypes.login.request
-      lock = new Auth0Lock @auth0ClientId, @auth0Domain,
+      lock = new Auth0Lock auth0ClientId, auth0Domain,
         theme: {logo, primaryColor}
       lock.show()
       lock.on "authenticated", (authResult) ->

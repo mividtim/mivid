@@ -47,7 +47,7 @@ actions = {
       dispatch({
         type: actionTypes.login.request
       });
-      lock = new Auth0Lock(this.auth0ClientId, this.auth0Domain, {
+      lock = new Auth0Lock(auth0ClientId, auth0Domain, {
         theme: {
           logo: logo,
           primaryColor: primaryColor
