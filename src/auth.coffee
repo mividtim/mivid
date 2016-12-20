@@ -14,9 +14,15 @@ actionTypes =
     success: "AUTH_USER_SUCCESS"
     fail: "AUTH_USER_FAIL"
 
-init = (auth0ClientId, auth0Domain) ->
-  @auth0ClientId = auth0ClientId
-  @auth0Domain = auth0Domain
+auth0ClientId = auth0ClientId
+auth0Domain = auth0Domain
+logo = logo
+primaryColor = primaryColor
+init = (auth0ClientIdIn, auth0DomainIn, logoURLIn, primaryColorIn) ->
+  auth0ClientId = auth0ClientIdIn
+  auth0Domain = auth0DomainIn
+  logo = logoURLIn
+  primaryColor = primaryColorIn
 
 actions =
   login: ->
@@ -24,9 +30,7 @@ actions =
     (dispatch) ->
       dispatch type: actionTypes.login.request
       lock = new Auth0Lock @auth0ClientId, @auth0Domain,
-        theme:
-          logo: "https://chirptag.herokuapp.com/icon/apple-icon-57x57.png"
-          primaryColor: "#86748e"
+        theme: {logo, primaryColor}
       lock.show()
       lock.on "authenticated", (authResult) ->
         localStorage.setItem "authToken", token

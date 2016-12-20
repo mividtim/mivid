@@ -1,4 +1,4 @@
-var Auth0Lock, actionTypes, actions, assign, clientId, decoded, graphql, init, initialState, jwt, reducer, token;
+var Auth0Lock, actionTypes, actions, assign, auth0ClientId, auth0Domain, clientId, decoded, graphql, init, initialState, jwt, logo, primaryColor, reducer, token;
 
 assign = require("lodash.assign");
 
@@ -23,9 +23,19 @@ actionTypes = {
   }
 };
 
-init = function(auth0ClientId, auth0Domain) {
-  this.auth0ClientId = auth0ClientId;
-  return this.auth0Domain = auth0Domain;
+auth0ClientId = auth0ClientId;
+
+auth0Domain = auth0Domain;
+
+logo = logo;
+
+primaryColor = primaryColor;
+
+init = function(auth0ClientIdIn, auth0DomainIn, logoURLIn, primaryColorIn) {
+  auth0ClientId = auth0ClientIdIn;
+  auth0Domain = auth0DomainIn;
+  logo = logoURLIn;
+  return primaryColor = primaryColorIn;
 };
 
 actions = {
@@ -39,8 +49,8 @@ actions = {
       });
       lock = new Auth0Lock(this.auth0ClientId, this.auth0Domain, {
         theme: {
-          logo: "https://chirptag.herokuapp.com/icon/apple-icon-57x57.png",
-          primaryColor: "#86748e"
+          logo: logo,
+          primaryColor: primaryColor
         }
       });
       lock.show();
