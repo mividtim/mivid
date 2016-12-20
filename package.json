@@ -2,7 +2,7 @@
   "name": "mivid",
   "author": "Mivid Studios <mivid-stack@mividstudios.com>",
   "description": "A front-end stack of Auth0, Riot.js, Redux, and GraphQL",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "license": "MIT",
   "homepage": "https://github.com/mividtim/mivid",
   "repository": {
@@ -12,7 +12,7 @@
   "engines": {
     "node": "6.9.2"
   },
-  "main": "dist/index.js",
+  "main": "index.js",
   "scripts": {
     "clean": "gulp clean",
     "build": "gulp build",
