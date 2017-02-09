@@ -1,6 +1,6 @@
 assign = require "lodash.assign"
 auth = require "./auth"
-getModuleExports = require "./getModuleExports"
+getModuleExports = require "./get-module-exports"
 redux = require "redux"
 router = require "./router"
 thunk = require "redux-thunk"

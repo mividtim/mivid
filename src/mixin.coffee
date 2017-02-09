@@ -3,13 +3,10 @@ sound = require "./sound"
 
 module.exports = init: (mixins) ->
 
-  riot.mixin init: -> @on "mount", ->
-    componentHandler.upgradeElements @root.querySelectorAll ".mdl"
-    componentHandler.upgradeAllRegistered()
-
-  riot.mixin "message", init: ->
-      @message = (message) ->
-        document.querySelector(".snackbar").MaterialSnackbar.showSnackbar {message}
+  riot.mixin init: ->
+    @on "mount", ->
+      componentHandler.upgradeElements @root.querySelectorAll ".mdl"
+      componentHandler.upgradeAllRegistered()
 
   riot.mixin "multiSelectValues", init: ->
     @multiSelectValues = (multiSelect) ->

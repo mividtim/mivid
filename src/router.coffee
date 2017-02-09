@@ -1,16 +1,16 @@
 riot = require "riot"
 router = require "riot-route"
 
-actionTypes = route: "ROUTE"
+types = route: "ROUTE"
 
 actions =
   route: (route) -> {
-    type: actionTypes.route
+    type: types.route
     route
   }
 
 reducer = (state = "home", action) ->
-  if action.type is actionTypes.route
+  if action.type is types.route
     if action.route.length < 1 then "home" else action.route
   else state
 
@@ -32,7 +32,6 @@ init = (bootstrap) ->
       routed = state.route is @root.localName and state.route isnt route
       route = state.route
       triggerRoute @ if routed
-  tags = {}
   # Dispatch a route action to the Redux store whenever the URI hash changes
   router (route) ->
     if route.startsWith "access_token"
@@ -43,22 +42,17 @@ init = (bootstrap) ->
     else
       redux.store.dispatch actions.route route
   # Now that the action is dispatching, subscribe to the store, and re-route on change
+  currentPage = null
+  currentRoute = null
   redux.store.subscribe ->
-    state = redux.store.getState()
-    if not bootstrap? or bootstrap redux.store, redux.actions
+    main = document.getElementById "layoutMain"
+    if main? and (not bootstrap? or bootstrap redux.store, redux.actions)
       bootstrap = null
-      # Get the route from the current state in the Redux store
-      route = state.route
-      # Make sure the document is done loading
-      main = document.getElementById "layoutMain"
-      # If we haven't shown this card before...
-      if main? and not tags[route]?
-        # Create a new route tag
-        tag = tags[route] = document.createElement "route"
-        tag.setAttribute "tag", route
-        # Add the route tag to the layout
-        main.appendChild tag
-        riot.mount "route"
+      route = redux.store.getState().route
+      if currentRoute isnt route
+        currentRoute = route
+        currentPage?.unmount? yes
+        currentPage = riot.mount main, route
   # Now that we're wired up the event to the Redux action, start up the router
   router.start()
 

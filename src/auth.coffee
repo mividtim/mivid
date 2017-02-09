@@ -4,7 +4,7 @@ require "bluebird"
 graphql = require "./graphql"
 jwt = require "jsonwebtoken"
 
-actionTypes =
+types =
   login:
     request: "AUTH_LOGIN_REQUEST"
     success: "AUTH_LOGIN_SUCCESS"
@@ -14,29 +14,25 @@ actionTypes =
     success: "AUTH_USER_SUCCESS"
     fail: "AUTH_USER_FAIL"
 
-auth0ClientId = auth0ClientId
-auth0Domain = auth0Domain
-logo = logo
-primaryColor = primaryColor
-init = (auth0ClientIdIn, auth0DomainIn, logoURLIn, primaryColorIn) ->
-  auth0ClientId = auth0ClientIdIn
-  auth0Domain = auth0DomainIn
-  logo = logoURLIn
-  primaryColor = primaryColorIn
+init = (auth0ClientId, auth0Domain) ->
+  @auth0ClientId = auth0ClientId
+  @auth0Domain = auth0Domain
 
 actions =
   login: ->
     redux = require "./redux"
     (dispatch) ->
-      dispatch type: actionTypes.login.request
-      lock = new Auth0Lock auth0ClientId, auth0Domain,
-        theme: {logo, primaryColor}
+      dispatch type: types.login.request
+      lock = new Auth0Lock @auth0ClientId, @auth0Domain,
+        theme:
+          logo: "https://chirptag.herokuapp.com/icon/apple-icon-57x57.png"
+          primaryColor: "#86748e"
       lock.show()
       lock.on "authenticated", (authResult) ->
         localStorage.setItem "authToken", token
         dispatch redux.actions.auth.loggedIn authResult.idToken
   loggedIn: (token) -> {
-    type: actionTypes.login.success
+    type: types.login.success
     token
     clientId: jwt.decode(token).sub
   }
@@ -44,8 +40,8 @@ actions =
     (dispatch, getState) ->
       state = getState()
       if not state.gettingUser
-        dispatch type: actionTypes.getUser.request
-        graphql(getState()).query """
+        dispatch type: types.getUser.request
+        graphql.query """
           query user($clientId: String) {
             user(clientId: $clientId) {
               id
@@ -61,10 +57,10 @@ actions =
           """,
           clientId: state.auth.clientId
         .then (response) ->
-            dispatch
-              type: actionTypes.getUser.success
-              user: response.data.user
-        .catch (error) -> dispatch {type: actionTypes.getUser.fail, error}
+          dispatch
+            type: types.getUser.success
+            user: response.data.user
+        .catch (error) -> dispatch {type: types.getUser.fail, error}
 
 token = localStorage.getItem "authToken"
 clientId = null
@@ -86,31 +82,31 @@ initialState = {
 }
 reducer = (state = initialState, action) ->
   switch action.type
-    when actionTypes.login.request
+    when types.login.request
       assign {}, state,
         loggingIn: yes
         authorized: no
         token: null
         clientId: null
-    when actionTypes.login.success
+    when types.login.success
       assign {}, state,
         loggingIn: no
         authorized: yes
         token: action.token
         clientId: action.clientId
-    when actionTypes.login.fail
+    when types.login.fail
       assign {}, state,
         loggingIn: no
         error: action.error
-    when actionTypes.getUser.request
+    when types.getUser.request
       assign {}, state,
         gettingUser: yes
         user: null
-    when actionTypes.getUser.success
+    when types.getUser.success
       assign {}, state,
         gettingUser: no
         user: action.user
-    when actionTypes.getUser.fail
+    when types.getUser.fail
       assign {}, state,
         #gettingUser: no
         error: action.error
