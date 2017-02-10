@@ -2,9 +2,14 @@ var graphql;
 
 graphql = require("graphql-client");
 
-module.exports = function(apiBase) {
-  return graphql({
-    url: apiBase,
-    headers: {}
-  });
+module.exports = {
+  init: function(apiBase) {
+    return this.apiBase = apiBase;
+  },
+  query: function() {
+    return graphql({
+      url: this.apiBase,
+      headers: {}
+    });
+  }
 };

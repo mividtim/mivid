@@ -1,5 +1,5 @@
 graphql = require "graphql-client"
 
 module.exports =
-  init: (apiBase) = -> @apiBase = apiBase
+  init: (apiBase) -> @apiBase = apiBase
   query: -> graphql url: @apiBase, headers: {}

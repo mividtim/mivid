@@ -1,6 +1,8 @@
-var auth, mixin, redux, router, sound;
+var auth, graphql, mixin, redux, router, sound;
 
 auth = require("./auth");
+
+graphql = require("./graphql");
 
 mixin = require("./mixin");
 
@@ -14,9 +16,10 @@ sound = require("./sound");
 
 module.exports = {
   init: function(arg) {
-    var actionsAndReducers, auth0ClientId, auth0Domain, bootstrap, layoutTagName, mixins, sounds;
-    auth0ClientId = arg.auth0ClientId, auth0Domain = arg.auth0Domain, actionsAndReducers = arg.actionsAndReducers, bootstrap = arg.bootstrap, layoutTagName = arg.layoutTagName, mixins = arg.mixins, sounds = arg.sounds;
+    var actionsAndReducers, apiBase, auth0ClientId, auth0Domain, bootstrap, layoutTagName, mixins, sounds;
+    apiBase = arg.apiBase, auth0ClientId = arg.auth0ClientId, auth0Domain = arg.auth0Domain, actionsAndReducers = arg.actionsAndReducers, bootstrap = arg.bootstrap, layoutTagName = arg.layoutTagName, mixins = arg.mixins, sounds = arg.sounds;
     auth.init(auth0ClientId, auth0Domain);
+    graphql.init(apiBase);
     redux.init(actionsAndReducers || {});
     if (sounds != null) {
       sound.init(sounds);

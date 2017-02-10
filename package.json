@@ -2,15 +2,12 @@
   "name": "mivid",
   "author": "Mivid Studios <mivid-stack@mividstudios.com>",
   "description": "A front-end stack of Auth0, Riot.js, Redux, and GraphQL",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "license": "MIT",
   "homepage": "https://github.com/mividtim/mivid",
   "repository": {
     "type": "git",
     "url": "https://github.com/mividtim/mivid.git"
-  },
-  "engines": {
-    "node": "6.9.2"
   },
   "main": "index.js",
   "scripts": {
