@@ -1,17 +1,17 @@
-var actionTypes, actions, init, reducer, riot, router, start, triggerRoute;
+var actions, init, reducer, riot, router, start, triggerRoute, types;
 
 riot = require("riot");
 
 router = require("riot-route");
 
-actionTypes = {
+types = {
   route: "ROUTE"
 };
 
 actions = {
   route: function(route) {
     return {
-      type: actionTypes.route,
+      type: types.route,
       route: route
     };
   }
@@ -21,7 +21,7 @@ reducer = function(state, action) {
   if (state == null) {
     state = "home";
   }
-  if (action.type === actionTypes.route) {
+  if (action.type === types.route) {
     if (action.route.length < 1) {
       return "home";
     } else {
@@ -45,7 +45,7 @@ triggerRoute = function(tag) {
 };
 
 init = function(bootstrap) {
-  var redux, tags;
+  var currentPage, currentRoute, redux;
   redux = require("./redux");
   riot.mixin({
     init: function() {
@@ -70,7 +70,6 @@ init = function(bootstrap) {
       });
     }
   });
-  tags = {};
   router(function(route) {
     var token;
     if (route.startsWith("access_token")) {
@@ -82,18 +81,22 @@ init = function(bootstrap) {
       return redux.store.dispatch(actions.route(route));
     }
   });
+  currentPage = null;
+  currentRoute = null;
   redux.store.subscribe(function() {
-    var main, route, state, tag;
-    state = redux.store.getState();
-    if ((bootstrap == null) || bootstrap(redux.store, redux.actions)) {
+    var main, route;
+    main = document.getElementById("layoutMain");
+    if ((main != null) && ((bootstrap == null) || bootstrap(redux.store, redux.actions))) {
       bootstrap = null;
-      route = state.route;
-      main = document.getElementById("layoutMain");
-      if ((main != null) && (tags[route] == null)) {
-        tag = tags[route] = document.createElement("route");
-        tag.setAttribute("tag", route);
-        main.appendChild(tag);
-        return riot.mount("route");
+      route = redux.store.getState().route;
+      if (currentRoute !== route) {
+        currentRoute = route;
+        if (currentPage != null) {
+          if (typeof currentPage.unmount === "function") {
+            currentPage.unmount(true);
+          }
+        }
+        return currentPage = riot.mount(main, route);
       }
     }
   });

@@ -1,4 +1,4 @@
-var Auth0Lock, actionTypes, actions, assign, auth0ClientId, auth0Domain, clientId, decoded, graphql, init, initialState, jwt, logo, primaryColor, reducer, token;
+var Auth0Lock, actions, assign, clientId, decoded, graphql, init, initialState, jwt, reducer, token, types;
 
 assign = require("lodash.assign");
 
@@ -10,7 +10,7 @@ graphql = require("./graphql");
 
 jwt = require("jsonwebtoken");
 
-actionTypes = {
+types = {
   login: {
     request: "AUTH_LOGIN_REQUEST",
     success: "AUTH_LOGIN_SUCCESS",
@@ -23,19 +23,9 @@ actionTypes = {
   }
 };
 
-auth0ClientId = auth0ClientId;
-
-auth0Domain = auth0Domain;
-
-logo = logo;
-
-primaryColor = primaryColor;
-
-init = function(auth0ClientIdIn, auth0DomainIn, logoURLIn, primaryColorIn) {
-  auth0ClientId = auth0ClientIdIn;
-  auth0Domain = auth0DomainIn;
-  logo = logoURLIn;
-  return primaryColor = primaryColorIn;
+init = function(auth0ClientId, auth0Domain) {
+  this.auth0ClientId = auth0ClientId;
+  return this.auth0Domain = auth0Domain;
 };
 
 actions = {
@@ -45,12 +35,12 @@ actions = {
     return function(dispatch) {
       var lock;
       dispatch({
-        type: actionTypes.login.request
+        type: types.login.request
       });
-      lock = new Auth0Lock(auth0ClientId, auth0Domain, {
+      lock = new Auth0Lock(this.auth0ClientId, this.auth0Domain, {
         theme: {
-          logo: logo,
-          primaryColor: primaryColor
+          logo: "https://chirptag.herokuapp.com/icon/apple-icon-57x57.png",
+          primaryColor: "#86748e"
         }
       });
       lock.show();
@@ -62,7 +52,7 @@ actions = {
   },
   loggedIn: function(token) {
     return {
-      type: actionTypes.login.success,
+      type: types.login.success,
       token: token,
       clientId: jwt.decode(token).sub
     };
@@ -73,18 +63,18 @@ actions = {
       state = getState();
       if (!state.gettingUser) {
         dispatch({
-          type: actionTypes.getUser.request
+          type: types.getUser.request
         });
-        return graphql(getState()).query("query user($clientId: String) {\n  user(clientId: $clientId) {\n    id\n    clientId\n    person {\n      name\n      email\n      mobile\n      pictureURL\n    }\n  }\n}", {
+        return graphql.query("query user($clientId: String) {\n  user(clientId: $clientId) {\n    id\n    clientId\n    person {\n      name\n      email\n      mobile\n      pictureURL\n    }\n  }\n}", {
           clientId: state.auth.clientId
         }).then(function(response) {
           return dispatch({
-            type: actionTypes.getUser.success,
+            type: types.getUser.success,
             user: response.data.user
           });
         })["catch"](function(error) {
           return dispatch({
-            type: actionTypes.getUser.fail,
+            type: types.getUser.fail,
             error: error
           });
         });
@@ -122,36 +112,36 @@ reducer = function(state, action) {
     state = initialState;
   }
   switch (action.type) {
-    case actionTypes.login.request:
+    case types.login.request:
       return assign({}, state, {
         loggingIn: true,
         authorized: false,
         token: null,
         clientId: null
       });
-    case actionTypes.login.success:
+    case types.login.success:
       return assign({}, state, {
         loggingIn: false,
         authorized: true,
         token: action.token,
         clientId: action.clientId
       });
-    case actionTypes.login.fail:
+    case types.login.fail:
       return assign({}, state, {
         loggingIn: false,
         error: action.error
       });
-    case actionTypes.getUser.request:
+    case types.getUser.request:
       return assign({}, state, {
         gettingUser: true,
         user: null
       });
-    case actionTypes.getUser.success:
+    case types.getUser.success:
       return assign({}, state, {
         gettingUser: false,
         user: action.user
       });
-    case actionTypes.getUser.fail:
+    case types.getUser.fail:
       return assign({}, state, {
         error: action.error
       });

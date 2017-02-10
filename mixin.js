@@ -16,15 +16,6 @@ module.exports = {
         });
       }
     });
-    riot.mixin("message", {
-      init: function() {
-        return this.message = function(message) {
-          return document.querySelector(".snackbar").MaterialSnackbar.showSnackbar({
-            message: message
-          });
-        };
-      }
-    });
     riot.mixin("multiSelectValues", {
       init: function() {
         return this.multiSelectValues = function(multiSelect) {
