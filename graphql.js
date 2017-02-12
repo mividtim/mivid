@@ -6,7 +6,7 @@ apiBase = apiBase;
 
 module.exports = {
   init: function(apiBaseIn) {
-    return apiBase = apiBase;
+    return apiBase = apiBaseIn;
   },
   graphql: function(state) {
     return graphql({
