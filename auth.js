@@ -6,7 +6,7 @@ axios = require("axios");
 
 require("bluebird");
 
-graphql = require("./graphql");
+graphql = require("./graphql").graphql;
 
 jwtDecode = require("jwt-decode");
 
@@ -153,9 +153,7 @@ actions = {
   })(this),
   login: function(authRequest) {
     return function(dispatch, getState) {
-      var state;
-      state = getState();
-      if (!state.auth.loggingIn) {
+      if (!getState().auth.loggingIn) {
         dispatch({
           type: types.login.request
         });
@@ -191,7 +189,7 @@ actions = {
         dispatch({
           type: types.getUser.request
         });
-        return graphql.query("query user($href: String) {\n  user(href: $href) {\n    id\n    href\n    person {\n      name\n      email\n      mobile\n      pictureURL\n    }\n  }\n}", {
+        return graphql(getState()).query("query user($href: String) {\n  user(href: $href) {\n    id\n    href\n    person {\n      name\n      email\n      mobile\n      pictureURL\n    }\n  }\n}", {
           href: state.auth.href
         }).then(function(response) {
           return dispatch({

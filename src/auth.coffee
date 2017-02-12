@@ -1,7 +1,7 @@
 assign = require "lodash.assign"
 axios = require "axios"
 require "bluebird"
-graphql = require "./graphql"
+{graphql} = require "./graphql"
 jwtDecode = require "jwt-decode"
 
 types =
@@ -113,8 +113,7 @@ actions =
           window.location.hash = ""
   login: (authRequest) ->
     (dispatch, getState) ->
-      state = getState()
-      if not state.auth.loggingIn
+      if not getState().auth.loggingIn
         dispatch type: types.login.request
         axios.post apiBase + "login", authRequest
         .then (response) ->
@@ -134,7 +133,7 @@ actions =
       state = getState()
       if not state.gettingUser
         dispatch type: types.getUser.request
-        graphql.query """
+        graphql(getState()).query """
           query user($href: String) {
             user(href: $href) {
               id

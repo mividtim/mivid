@@ -1,12 +1,19 @@
-var graphql;
+var apiBase, graphql;
 
 graphql = require("graphql-client");
 
+apiBase = apiBase;
+
 module.exports = {
-  init: function(apiBase) {
-    return this.query = graphql({
+  init: function(apiBaseIn) {
+    return apiBase = apiBase;
+  },
+  graphql: function(state) {
+    return graphql({
       url: apiBase,
-      headers: {}
+      headers: {
+        Authorization: "Bearer " + state.auth.token
+      }
     }).query;
   }
 };

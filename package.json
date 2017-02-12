@@ -2,7 +2,7 @@
   "name": "mivid",
   "author": "Mivid Studios <mivid-stack@mividstudios.com>",
   "description": "A front-end stack of Riot.js, Redux, and GraphQL",
-  "version": "0.1.4",
+  "version": "0.1.6",
   "license": "MIT",
   "homepage": "https://github.com/mividtim/mivid",
   "repository": {
