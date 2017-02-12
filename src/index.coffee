@@ -1,3 +1,4 @@
+auth = require "./auth"
 graphql = require "./graphql"
 mixin = require "./mixin"
 redux = require "./redux"
