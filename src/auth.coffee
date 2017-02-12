@@ -98,13 +98,15 @@ reducer = (state = initialState, action) ->
         error: action.error
     else state
 
+apiBase = null
+
 actions =
   register: =>
     (dispatch, getState) =>
       state = getState()
       if not state.auth.registering
         dispatch type: types.register.request
-        axios.post @apiBase + "register", info
+        axios.post apiBase + "register", info
         .then (response) ->
           localStorage.setItem "authToken", response.data.token
           dispatch type: types.register.success, user: response.data
@@ -114,7 +116,7 @@ actions =
       state = getState()
       if not state.auth.loggingIn
         dispatch type: types.login.request
-        axios.post @apiBase + "login", authRequest
+        axios.post apiBase + "login", authRequest
         .then (response) ->
           localStorage.setItem "authToken", response.data.token
           dispatch type: types.login.success, user: response.data
@@ -157,7 +159,7 @@ actions =
           throw error
 
 module.exports = {
-  init: (apiBase) -> @apiBase = apiBase
+  init: (apiBaseIn) -> apiBase = apiBaseIn
   actions
   reducer
 }

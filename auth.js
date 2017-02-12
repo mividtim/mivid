@@ -1,4 +1,4 @@
-var actions, assign, axios, decoded, graphql, href, initialState, jwtDecode, reducer, token, types;
+var actions, apiBase, assign, axios, decoded, graphql, href, initialState, jwtDecode, reducer, token, types;
 
 assign = require("lodash.assign");
 
@@ -127,6 +127,8 @@ reducer = function(state, action) {
   }
 };
 
+apiBase = null;
+
 actions = {
   register: (function(_this) {
     return function() {
@@ -137,7 +139,7 @@ actions = {
           dispatch({
             type: types.register.request
           });
-          return axios.post(_this.apiBase + "register", info).then(function(response) {
+          return axios.post(apiBase + "register", info).then(function(response) {
             localStorage.setItem("authToken", response.data.token);
             dispatch({
               type: types.register.success,
@@ -157,7 +159,7 @@ actions = {
         dispatch({
           type: types.login.request
         });
-        return axios.post(this.apiBase + "login", authRequest).then(function(response) {
+        return axios.post(apiBase + "login", authRequest).then(function(response) {
           localStorage.setItem("authToken", response.data.token);
           return dispatch({
             type: types.login.success,
@@ -210,8 +212,8 @@ actions = {
 };
 
 module.exports = {
-  init: function(apiBase) {
-    return this.apiBase = apiBase;
+  init: function(apiBaseIn) {
+    return apiBase = apiBaseIn;
   },
   actions: actions,
   reducer: reducer
