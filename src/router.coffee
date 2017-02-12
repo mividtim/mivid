@@ -34,13 +34,7 @@ init = (bootstrap) ->
       triggerRoute @ if routed
   # Dispatch a route action to the Redux store whenever the URI hash changes
   router (route) ->
-    if route.startsWith "access_token"
-      token = route.split("id_token=")[1].split("&")[0]
-      localStorage.setItem "authToken", token
-      redux.store.dispatch redux.actions.auth.loggedIn token
-      window.location.hash = ""
-    else
-      redux.store.dispatch actions.route route
+    redux.store.dispatch actions.route route
   # Now that the action is dispatching, subscribe to the store, and re-route on change
   currentPage = null
   currentRoute = null

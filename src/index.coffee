@@ -1,4 +1,3 @@
-auth = require "./auth"
 graphql = require "./graphql"
 mixin = require "./mixin"
 redux = require "./redux"
@@ -6,8 +5,8 @@ window.riot = require "riot"
 router = require "./router"
 sound = require "./sound"
 
-module.exports = init: ({apiBase, auth0ClientId, auth0Domain, actionsAndReducers, bootstrap, layoutTagName, mixins, sounds}) ->
-  auth.init auth0ClientId, auth0Domain
+module.exports = init: ({apiBase, actionsAndReducers, bootstrap, layoutTagName, mixins, sounds}) ->
+  auth.init apiBase
   graphql.init apiBase
   redux.init actionsAndReducers or {}
   sound.init sounds if sounds?

@@ -71,15 +71,7 @@ init = function(bootstrap) {
     }
   });
   router(function(route) {
-    var token;
-    if (route.startsWith("access_token")) {
-      token = route.split("id_token=")[1].split("&")[0];
-      localStorage.setItem("authToken", token);
-      redux.store.dispatch(redux.actions.auth.loggedIn(token));
-      return window.location.hash = "";
-    } else {
-      return redux.store.dispatch(actions.route(route));
-    }
+    return redux.store.dispatch(actions.route(route));
   });
   currentPage = null;
   currentRoute = null;
