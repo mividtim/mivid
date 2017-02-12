@@ -1,6 +1,8 @@
-var actions, assign, decoded, graphql, href, initialState, jwtDecode, reducer, token, types;
+var actions, assign, axios, decoded, graphql, href, initialState, jwtDecode, reducer, token, types;
 
 assign = require("lodash.assign");
+
+axios = require("axios");
 
 require("bluebird");
 
