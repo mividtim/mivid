@@ -1,4 +1,6 @@
-var graphql, mixin, redux, router, sound;
+var auth, graphql, mixin, redux, router, sound;
+
+auth = require("./auth");
 
 graphql = require("./graphql");
 
