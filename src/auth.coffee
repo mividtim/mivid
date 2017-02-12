@@ -1,4 +1,5 @@
 assign = require "lodash.assign"
+axios = require "axios"
 require "bluebird"
 graphql = require "./graphql"
 jwtDecode = require "jwt-decode"
