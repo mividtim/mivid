@@ -139,7 +139,8 @@ actions =
               id
               href
               person {
-                name
+                givenName
+                surname
                 email
                 mobile
                 pictureURL
