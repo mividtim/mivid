@@ -14,6 +14,6 @@ module.exports = {
       headers: {
         Authorization: "Bearer " + state.auth.token
       }
-    }).query;
+    });
   }
 };
